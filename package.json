@@ -10,7 +10,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0 --port 4318",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/",
+    "test": "node --test tests/*.test.ts",
     "render:video": "node scripts/render.mjs video",
     "render:stills": "node scripts/render.mjs stills",
     "deploy:pages": "node scripts/deploy-pages.mjs"
