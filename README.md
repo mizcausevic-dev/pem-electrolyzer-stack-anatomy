@@ -79,11 +79,11 @@ Measured on the build machine (4 vCPU Intel Xeon, headless Chrome, software canv
 
 | Measurement | Result |
 | --- | --- |
-| `renderFrame()` per frame, two runs | mean 12.6–12.7 ms, p50 9.8–9.9 ms, p95 20.5–20.8 ms, max 46.6–46.7 ms (frame 498) |
+| `renderFrame()` per frame, three runs | mean 12.6–12.9 ms, p50 9.8–10 ms, p95 20.5–21.5 ms, max 46.6–47.2 ms (frame 498) |
 | Full MP4 render (PNG capture + libx264 `-crf 20 -preset slow`) | 1,020 frames in 72.9 s |
 | MP4 output | 1920×1080, 30 fps, 1,020 frames, 34.000 s, 18.96 MB |
 | Production JS bundle | 58.15 kB (20.39 kB gzip) |
-| Canvas calls per frame | 1,194 to 66,175, mean 15,089 |
+| Canvas calls per frame (recording context) | 1,523 (frame 0) to 66,892 (frame 383), mean 15,962 |
 
 ## Tests
 
