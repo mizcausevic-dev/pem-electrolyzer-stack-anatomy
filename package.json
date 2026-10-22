@@ -1,5 +1,5 @@
 {
-  "name": "pem-electrolyzer-stack-explainer",
+  "name": "pem-electrolyzer-stack-anatomy",
   "private": true,
   "version": "1.0.0",
   "description": "Deterministic, frame-driven anatomy explainer of a generic PEM electrolyzer stack. 34 s, 30 fps, 1,020 frames.",
