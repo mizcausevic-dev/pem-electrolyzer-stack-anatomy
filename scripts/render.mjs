@@ -5,6 +5,7 @@
  *   node scripts/render.mjs stills [frames...]   PNG stills to .renders/stills/
  *   node scripts/render.mjs video                MP4 to public/media/ (needs ffmpeg)
  *   node scripts/render.mjs hero                 hero + social card PNGs to public/media/
+ *   node scripts/render.mjs bench                time renderFrame() for every frame in headless Chrome
  *
  * Env: CHROME_PATH to override the browser binary.
  */
@@ -113,6 +114,28 @@ try {
     const code = await new Promise((r) => ff.on('close', r));
     if (code !== 0) throw new Error(`ffmpeg exited with ${code}`);
     console.log(`${file} (${total} frames in ${((Date.now() - t0) / 1000).toFixed(1)} s)`);
+  } else if (mode === 'bench') {
+    const stats = await page.evaluate(() => {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const times = [];
+      for (let f = 0; f < window.__pem.total; f++) {
+        const t = performance.now();
+        window.__pem.render(f, true);
+        ctx.getImageData(0, 0, 1, 1);
+        times.push([performance.now() - t, f]);
+      }
+      times.sort((a, b) => a[0] - b[0]);
+      const pick = (q) => times[Math.min(times.length - 1, Math.floor(q * times.length))][0];
+      const mean = times.reduce((s, [ms]) => s + ms, 0) / times.length;
+      const [worst, worstFrame] = times[times.length - 1];
+      return { frames: times.length, meanMs: mean, p50Ms: pick(0.5), p95Ms: pick(0.95), maxMs: worst, worstFrame };
+    });
+    const r = (n) => Math.round(n * 10) / 10;
+    console.log(
+      `renderFrame over ${stats.frames} frames: mean ${r(stats.meanMs)} ms, p50 ${r(stats.p50Ms)} ms, ` +
+        `p95 ${r(stats.p95Ms)} ms, max ${r(stats.maxMs)} ms (frame ${stats.worstFrame})`,
+    );
   } else {
     throw new Error(`Unknown mode "${mode}"`);
   }
