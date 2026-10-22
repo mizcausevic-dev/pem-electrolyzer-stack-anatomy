@@ -1,0 +1,25 @@
+{
+  "name": "pem-electrolyzer-stack-explainer",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Deterministic, frame-driven anatomy explainer of a generic PEM electrolyzer stack. 34 s, 30 fps, 1,020 frames.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 4317",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 4318",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/",
+    "render:video": "node scripts/render.mjs video",
+    "render:stills": "node scripts/render.mjs stills",
+    "deploy:pages": "node scripts/deploy-pages.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "playwright-core": "^1.64.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
+}

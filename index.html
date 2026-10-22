@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PEM Electrolyzer Stack Anatomy: A Frame-Exact Motion Explainer</title>
+    <meta
+      name="description"
+      content="A 34-second, 1,020-frame code-driven anatomy explainer of a generic PEM electrolyzer stack: MEA and plates, water feed, gas evolution, cooling and balance of plant."
+    />
+    <link rel="canonical" href="https://mizcausevic-dev.github.io/pem-electrolyzer-stack-explainer/" />
+    <meta name="theme-color" content="#0B1019" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Inside a PEM Electrolyzer Stack: a frame-exact anatomy explainer" />
+    <meta
+      property="og:description"
+      content="Five camera moves, 1,020 deterministic frames: how a generic PEM stack turns water into hydrogen, from the membrane to the balance of plant."
+    />
+    <meta property="og:url" content="https://mizcausevic-dev.github.io/pem-electrolyzer-stack-explainer/" />
+    <meta property="og:image" content="https://mizcausevic-dev.github.io/pem-electrolyzer-stack-explainer/media/og-Cursor.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LearningResource",
+        "name": "PEM Electrolyzer Stack Anatomy: A Frame-Exact Motion Explainer",
+        "description": "Code-driven, deterministic 34-second anatomy explainer of a generic proton exchange membrane (PEM) electrolyzer stack.",
+        "url": "https://mizcausevic-dev.github.io/pem-electrolyzer-stack-explainer/",
+        "learningResourceType": "Interactive animation",
+        "about": ["Proton exchange membrane electrolysis", "Hydrogen production", "Electrolyzer stack"],
+        "isBasedOn": "https://www.energy.gov/eere/fuelcells/hydrogen-production-electrolysis",
+        "inLanguage": "en",
+        "author": { "@type": "Person", "name": "Miz Causevic", "url": "https://github.com/mizcausevic-dev" },
+        "timeRequired": "PT34S"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#explainer">Skip to the explainer</a>
+    <header class="top">
+      <div class="brand">
+        <span class="kicker">Hydrogen &amp; Fuel Cell Systems</span>
+        <span class="name">PEM Electrolyzer Stack <em>Anatomy</em></span>
+      </div>
+      <nav class="links" aria-label="Project links">
+        <a href="https://github.com/mizcausevic-dev/pem-electrolyzer-stack-explainer" rel="noopener">Source</a>
+        <a href="https://www.energy.gov/eere/fuelcells/hydrogen-production-electrolysis" rel="noopener">DOE reference</a>
+        <a href="./media/pem-electrolyzer-explainer-Cursor.mp4" download>MP4</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="explainer" class="stage-wrap" aria-label="Animated explainer">
+        <div class="stage" id="stage">
+          <canvas id="canvas" width="1920" height="1080" role="img" aria-label="Animated sectional view of a generic PEM electrolyzer stack. The current scene is described below the player."></canvas>
+          <div class="loading" id="loading" role="status">Loading fonts and geometry</div>
+          <button class="bigplay" id="bigplay" type="button" aria-label="Play explainer" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+          </button>
+        </div>
+
+        <div class="controls" role="group" aria-label="Playback controls">
+          <button id="play" type="button" class="btn primary" aria-label="Play">
+            <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+            <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" /></svg>
+          </button>
+          <button id="prev" type="button" class="btn" aria-label="Previous frame" title="Previous frame (Left arrow)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6h2v12H7zM18 6v12l-8-6z" /></svg>
+          </button>
+          <button id="next" type="button" class="btn" aria-label="Next frame" title="Next frame (Right arrow)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6h2v12h-2zM6 6v12l8-6z" /></svg>
+          </button>
+          <div class="scrub">
+            <input id="scrub" type="range" min="0" max="1019" step="1" value="0" aria-label="Frame" />
+            <div class="ticks" id="ticks" aria-hidden="true"></div>
+          </div>
+          <output id="tc" class="tc" aria-live="off">00:00.00 · F 0000</output>
+          <label class="sel">
+            <span class="sr">Playback speed</span>
+            <select id="speed" aria-label="Playback speed">
+              <option value="0.25">0.25×</option>
+              <option value="0.5">0.5×</option>
+              <option value="1" selected>1×</option>
+            </select>
+          </label>
+          <button id="loop" type="button" class="btn toggle" aria-pressed="true" title="Loop">Loop</button>
+          <button id="hud" type="button" class="btn toggle" aria-pressed="true" title="Overlay (H)">HUD</button>
+          <button id="png" type="button" class="btn" title="Download this frame as PNG">PNG</button>
+          <button id="fs" type="button" class="btn" aria-label="Fullscreen" title="Fullscreen (F)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5v2H6v3zm10-5h6v5h-2V6h-4zM6 15v3h3v2H4v-5zm12 0h2v5h-5v-2h3z" /></svg>
+          </button>
+        </div>
+
+        <div class="now" aria-live="polite" id="now">
+          <span class="now-chapter" id="nowChapter"></span>
+          <span class="now-caption" id="nowCaption"></span>
+          <span class="now-badges" id="nowBadges"></span>
+        </div>
+      </section>
+
+      <section class="chapters" aria-labelledby="chapters-h">
+        <h2 id="chapters-h">Five camera moves, one causal chain</h2>
+        <ol id="chapterList"></ol>
+      </section>
+
+      <section class="grid2">
+        <article class="card">
+          <h2>How to read the colors</h2>
+          <ul class="legend">
+            <li><i style="--c: #00e5ff"></i><b>Cyan</b> primary pathway: water in, protons across the membrane, hydrogen out.</li>
+            <li><i style="--c: #ffd166"></i><b>Gold</b> energy or actuation: DC current, heat, the pump and control valves.</li>
+            <li><i style="--c: #9d4edd"></i><b>Violet</b> sensing or state change: instrument tags and reaction sites.</li>
+            <li><i style="--c: #dce3ec"></i><b>Neutral</b> oxygen, the by-product, kept out of the accent system.</li>
+          </ul>
+          <p class="muted">
+            These are explanatory overlays, not literal emission. Hardware is drawn solid with hatched cut faces,
+            fields are translucent with dashed contours, and equations sit in boxed grids so the three never blur.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Accuracy guardrails</h2>
+          <ul class="plain">
+            <li>Generic PEM stack. Not a specific commercial product or a certified design.</li>
+            <li>No efficiency, output or performance claims. The only number shown on screen is the DOE operating-temperature range, attributed.</li>
+            <li>Half-reactions follow the U.S. DOE description: anode 2H₂O → O₂ + 4H⁺ + 4e⁻, cathode 4H⁺ + 4e⁻ → 2H₂.</li>
+            <li>Changed scale, slow motion and time compression are labeled on screen whenever they apply.</li>
+            <li>Sectional views only. The removed half is shown as a ghost outline; nothing is disassembled.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h2>Deterministic by construction</h2>
+          <p>
+            Every frame is a pure function of its index: no clocks, no stored state, no unseeded randomness.
+            Scrub, step or deep-link to any frame with <code>?frame=420</code> and it renders identically every time.
+          </p>
+          <p class="muted">34 s · 30 fps · 1,020 frames, indexed 0 to 1019. Keyboard: Space play, arrows step, Shift+arrows ±1 s, 1 to 5 jump to a chapter, H overlay, F fullscreen.</p>
+        </article>
+        <article class="card">
+          <h2>Review status</h2>
+          <p>
+            Consolidated working brief, not a certified engineering reference. Camera moves, palette, cutaways and timing
+            are original illustrative choices, not experimentally validated observations. Verify subject-specific details
+            before publication.
+          </p>
+          <p class="muted">
+            Mechanism reference:
+            <a href="https://www.energy.gov/eere/fuelcells/hydrogen-production-electrolysis" rel="noopener">U.S. DOE, Hydrogen Production: Electrolysis</a>
+            and <a href="https://www.energy.gov/eere/fuelcells/hydrogen-production" rel="noopener">DOE Hydrogen Production</a>.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span>Built in code by <a href="https://github.com/mizcausevic-dev" rel="noopener">Miz Causevic</a> · Kinetic Gain</span>
+      <span class="muted">Illustrative schematic. Not engineering, safety or design guidance.</span>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
